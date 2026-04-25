@@ -18,8 +18,13 @@ resource "aws_instance" "this" {
 
   ami                    = each.value.ami
   instance_type          = each.value.instance_type
-  vpc_security_group_ids = [var.security_group_ids[each.key]]
-  iam_instance_profile   = var.iam_instance_profiles[each.key]
+  
+  # Usamos lookup para vincular el ID del Security Group que viene del otro módulo
+  vpc_security_group_ids = [lookup(var.security_group_ids, each.key, null)]
+  
+  # Usamos lookup para vincular el Profile de IAM que viene del módulo IAM
+  iam_instance_profile   = lookup(var.iam_instance_profiles, each.key, null)
+  
   key_name               = aws_key_pair.this.key_name
   subnet_id              = each.value.subnet_id
 

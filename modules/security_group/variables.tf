@@ -1,48 +1,19 @@
 variable "sg_config" {
-  description = "Configuración de los Segurity Group"
-  type = map(object({
-    name                 = string
-    description          = string
-    vpc_id               = string
-    projectsecuritygroup = string
-    ingress_rules = list(object({
-      from_port   = number
-      to_port     = number
-      protocol    = string
-      cidr_blocks = list(string)
-    }))
-
-  }))
-
-
+  description = "Configuracion de los Security Groups (Ingress rules)"
+  type        = any
 }
 
-
-
-
-
-
-variable "account" {
-  description = "cuenta"
+variable "proyecto" {
+  description = "Nombre del proyecto para el etiquetado"
   type        = string
 }
 
-
-variable "project" {
-  description = "project"
+variable "cuenta" {
+  description = "Numero de cuenta de AWS para el etiquetado"
   type        = string
 }
-
-
-variable "tags" {
-  type        = map(string)
-  description = "Tags para recursos de VPC Endpoints"
-}
-
-
-
 
 variable "vpc_id" {
-  description = "The VPC id to create the security group in"
+  description = "ID de la VPC donde se crearan los grupos de seguridad"
   type        = string
 }
